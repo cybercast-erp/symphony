@@ -12,7 +12,7 @@ permissions:
 jobs:
   build:
     name: build-${{ matrix.target }}
-    runs-on: ubuntu-24.04
+    runs-on: nscloud-ubuntu-24.04-amd64-4x8
     strategy:
       fail-fast: false
       matrix:
@@ -89,13 +89,13 @@ jobs:
       matrix:
         include:
           - target: linux_x86_64
-            runner: ubuntu-24.04
+            runner: nscloud-ubuntu-24.04-amd64-2x4
           - target: linux_arm64
-            runner: ubuntu-24.04-arm
+            runner: nscloud-ubuntu-24.04-arm64-2x4
           - target: macos_x86_64
             runner: macos-15-intel
           - target: macos_arm64
-            runner: macos-14
+            runner: nscloud-macos-sonoma-arm64-6x14
 
     steps:
       - name: Download release assets
@@ -121,7 +121,7 @@ jobs:
   release:
     if: startsWith(github.ref, 'refs/tags/v')
     needs: [build, smoke]
-    runs-on: ubuntu-24.04
+    runs-on: nscloud-ubuntu-24.04-amd64-2x4
     permissions:
       contents: write
 
